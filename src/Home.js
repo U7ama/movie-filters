@@ -64,7 +64,7 @@ const Home = () => {
               inputProps={{
                 onFocus: () => setInputSelected(true),
                 // onBlur: () => setInputSelected(false),
-                className: "md:w-[39rem] py-4 px-6 border border-[#979797]",
+                className: "md:w-[40rem] py-4 px-6 border border-[#979797]",
               }}
               renderInput={(props) => (
                 <input {...props} placeholder="Enter movie name" />
