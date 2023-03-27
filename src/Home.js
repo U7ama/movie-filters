@@ -1,27 +1,28 @@
+import React, { useState } from "react";
 import RatingDropdown from "./components/Ratings";
 import Genre from "./components/Genre";
-import React, { useState } from "react";
 import Results from "./components/Results";
-import Autocomplete from "react-autocomplete";
-import movieData from "./utils/movieData.json";
+import movieData from "./utils/moviedata.json";
 
 const Home = () => {
   const [moviesByInput, setMoviesByInput] = useState([]);
-  // const [moviesByRating, setMoviesByRating] = useState([]);
   const [moviesByGenre, setMoviesByGenre] = useState([]);
-  const [selectedTitle, setSelectedTitle] = useState("");
   const [inputSelected, setInputSelected] = useState(false);
   const [moviesByRating, setMoviesByRating] = useState([]);
   const [ratingDropdown, setRatingDropdown] = useState(false);
   const [genreDropdown, setGenreDropdown] = useState(false);
+  const [title, setTitle] = useState("");
 
-  const updateRating = (newMovies, rating) => {
-    // setMoviesByRating(newMovies);
+  const updateRating = (rating) => {
     setMoviesByRating(rating);
   };
 
   const updateGenre = (newMovies) => {
     setMoviesByGenre(newMovies);
+  };
+
+  const updateTitle = (title) => {
+    setTitle(title);
   };
 
   function handleInputChange(e) {
@@ -47,36 +48,18 @@ const Home = () => {
       >
         <div className="flex flex-col md:flex md:flex-row gap-4 w-full">
           <div className="w-full md:w-1/2 ">
-            <Autocomplete
-              className="w-full"
-              items={movieData}
-              getItemValue={(item) => item.title}
-              value={selectedTitle}
+            <input
+              // value={title}
+              defaultValue={title}
+              className="w-full py-4 px-6 border border-[#979797]"
               onChange={(e) => {
                 handleInputChange(e.target.value);
-                setSelectedTitle(e.target.value);
               }}
-              onSelect={(value) => {
-                console.log("value", value);
-                handleInputChange(value);
-                setSelectedTitle(value);
+              onFocus={() => {
+                setInputSelected(true);
               }}
-              inputProps={{
-                onFocus: () => setInputSelected(true),
-                // onBlur: () => setInputSelected(false),
-                className: "md:w-[40rem] py-4 px-6 border border-[#979797]",
-              }}
-              renderInput={(props) => (
-                <input {...props} placeholder="Enter movie name" />
-              )}
-              renderItem={(item, isHighlighted) => (
-                <div
-                  key={item.title}
-                  style={{ background: isHighlighted ? "lightgray" : "white" }}
-                >
-                  {/* {item.title} */}
-                </div>
-              )}
+              onClick={() => setTitle("")}
+              placeholder={title ? title : "Enter movie name"}
             />
           </div>
           <div className="w-full md:w-1/2 ">
@@ -115,6 +98,7 @@ const Home = () => {
         <div className="w-full md:w-1/2">
           {inputSelected && (
             <Results
+              onUpdateTitle={updateTitle}
               rating={moviesByRating}
               title={moviesByInput}
               genre={moviesByGenre}

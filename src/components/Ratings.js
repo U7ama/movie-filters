@@ -27,19 +27,7 @@ const RatingDropdown = ({ dropdown, movieData, onUpdateMovies }) => {
   };
 
   useEffect(() => {
-    const newFilteredMovies = movieData.filter((movie) => {
-      if (
-        selectedRatings.length === 0 ||
-        (selectedRatings.length > 0 &&
-          !selectedRatings.some(
-            (r) => movie.rating >= r.min && movie.rating <= r.max
-          ))
-      ) {
-        return false;
-      }
-      return true;
-    });
-    onUpdateMovies(newFilteredMovies, ratings);
+    onUpdateMovies(ratings);
   }, [selectedRatings, movieData, onUpdateMovies, ratings]);
 
   const MovieRating = ({ rating }) => {
@@ -78,7 +66,7 @@ const RatingDropdown = ({ dropdown, movieData, onUpdateMovies }) => {
         </div>
         {dropdown && (
           <div
-            className="flex flex-col mt-1 absolute top-16 w-[150%] bg-white shadow-md left-0 rounded-md px-0 py-4"
+            className="flex flex-col mt-1 absolute top-16 w-[205%] md:w-[150%] bg-white shadow-md left-0 rounded-md px-0 py-4"
             onClick={(e) => e.stopPropagation()}
           >
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rating) => {
@@ -87,7 +75,7 @@ const RatingDropdown = ({ dropdown, movieData, onUpdateMovies }) => {
               return (
                 <label
                   key={rating}
-                  className="flex gap-4 cursor-pointer items-center justify-start p-2 text-sm font-medium text-center text-gray-800 bg-white hover:bg-gray-100"
+                  className="flex gap-4 cursor-pointer overflow-hidden items-center justify-start p-2 text-sm font-medium text-center text-gray-800 bg-white hover:bg-gray-100"
                 >
                   <input
                     type="checkbox"

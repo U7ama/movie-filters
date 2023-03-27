@@ -1,6 +1,6 @@
 import React from "react";
 
-const Results = ({ rating, title, genre, movieData }) => {
+const Results = ({ onUpdateTitle, rating, title, genre, movieData }) => {
   const titles = title?.map((movie) => movie?.title);
   const categories = genre?.map((movie) => movie?.category);
   console.log("results", rating, titles, categories);
@@ -70,9 +70,13 @@ const Results = ({ rating, title, genre, movieData }) => {
 
   return (
     <div className="mt-2">
-      <ul className="flex border rounded-md flex-col">
+      <ul className="flex border rounded-md flex-col bg-white">
         {filtered.map((movie) => (
-          <li key={movie.title} className="flex flex-col overflow-hidden">
+          <li
+            key={movie.title}
+            onClick={() => onUpdateTitle(movie.title)}
+            className="flex flex-col overflow-hidden cursor-pointer"
+          >
             <div className="p-4 flex">
               <div className="text-gray-800">{movie.title}</div>
               <div className="text-[#777777] ml-auto">{movie.category}</div>
